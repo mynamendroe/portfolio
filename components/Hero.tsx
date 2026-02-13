@@ -54,7 +54,7 @@ export function Hero() {
           }}
           onHoverStart={() => setHoveredIndex(index)}
           onHoverEnd={() => setHoveredIndex(null)}
-          className="text-9xl font-oswald font-bold cursor-default transition-colors tracking-tight"
+          className="text-4xl md:text-6xl lg:text-9xl font-oswald font-bold cursor-default transition-colors tracking-tight"
         >
           {item.text}
         </motion.h1>

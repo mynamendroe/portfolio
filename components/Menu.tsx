@@ -15,17 +15,17 @@ export function Menu({ onClose }: MenuProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex-1 flex flex-col px-8 pb-8 font-oswald bg-zinc-800 mx-8 mt-4 mb-8 rounded-4xl justify-between z-50"
+      className="flex-1 flex flex-col px-8 pb-8 pt-4 font-oswald bg-zinc-800 mx-5 md:mx-8 mt-4 mb-5 md:mb-8 rounded-4xl justify-between z-50"
     >
       <ul>
         <li className="group relative flex justify-between items-baseline py-4 border-b border-white/20">
           <Link
             href="/"
-            className="text-9xl font-semibold tracking-tighter flex items-center"
+            className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[96px] group-hover:mr-6 group-hover:opacity-100 block">
-              <Icon.HouseIcon className="text-white min-w-[96px]" size={96} />
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
+              <Icon.HouseIcon className="text-white min-w-[32px]" size={32} />
             </span>
             HOME
           </Link>
@@ -37,11 +37,11 @@ export function Menu({ onClose }: MenuProps) {
         <li className="group relative flex justify-between items-baseline py-4 border-b border-white/20">
           <Link
             href="/work"
-            className="text-9xl font-semibold tracking-tighter flex items-center"
+            className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[96px] group-hover:mr-6 group-hover:opacity-100 block">
-              <Icon.RocketIcon className="text-white min-w-[96px]" size={96} />
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
+              <Icon.RocketIcon className="text-white min-w-[32px]" size={32} />
             </span>
             WORK
           </Link>
@@ -53,13 +53,13 @@ export function Menu({ onClose }: MenuProps) {
         <li className="group relative flex justify-between items-baseline py-4 border-b border-white/20">
           <Link
             href="/contact"
-            className="text-9xl font-semibold tracking-tighter flex items-center"
+            className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[96px] group-hover:mr-6 group-hover:opacity-100 block">
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
               <Icon.EnvelopeIcon
-                className="text-white min-w-[96px]"
-                size={96}
+                className="text-white min-w-[32px]"
+                size={32}
               />
             </span>
             CONTACT

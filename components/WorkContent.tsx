@@ -88,7 +88,9 @@ const slideVariants: Variants = {
 export function WorkContent() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isNavVisible, setIsNavVisible] = useState(false);
   const isScrolling = useRef(false);
+  const touchStartY = useRef(0);
 
   const handleScroll = (e: WheelEvent) => {
     if (isScrolling.current) return;
@@ -97,18 +99,57 @@ export function WorkContent() {
       if (e.deltaY > 0 && currentIndex < projects.length - 1) {
         // Scroll Down
         isScrolling.current = true;
+        setIsNavVisible(true);
         setDirection(1);
         setCurrentIndex((prev) => prev + 1);
         setTimeout(() => {
           isScrolling.current = false;
+          setIsNavVisible(false);
         }, 1000);
       } else if (e.deltaY < 0 && currentIndex > 0) {
         // Scroll Up
         isScrolling.current = true;
+        setIsNavVisible(true);
         setDirection(-1);
         setCurrentIndex((prev) => prev - 1);
         setTimeout(() => {
           isScrolling.current = false;
+          setIsNavVisible(false);
+        }, 1000);
+      }
+    }
+  };
+
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (isScrolling.current) return;
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartY.current - touchEndY;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentIndex < projects.length - 1) {
+        // Swipe Up -> Next
+        isScrolling.current = true;
+        setIsNavVisible(true);
+        setDirection(1);
+        setCurrentIndex((prev) => prev + 1);
+        setTimeout(() => {
+          isScrolling.current = false;
+          setIsNavVisible(false);
+        }, 1000);
+      } else if (diff < 0 && currentIndex > 0) {
+        // Swipe Down -> Prev
+        isScrolling.current = true;
+        setIsNavVisible(true);
+        setDirection(-1);
+        setCurrentIndex((prev) => prev - 1);
+        setTimeout(() => {
+          isScrolling.current = false;
+          setIsNavVisible(false);
         }, 1000);
       }
     }
@@ -116,7 +157,13 @@ export function WorkContent() {
 
   useEffect(() => {
     window.addEventListener("wheel", handleScroll);
-    return () => window.removeEventListener("wheel", handleScroll);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
   }, [currentIndex]);
 
   const currentProject = projects[currentIndex];
@@ -131,9 +178,9 @@ export function WorkContent() {
           initial={direction === 0 ? "center" : "enter"}
           animate="center"
           exit="exit"
-          className={`absolute inset-0 mx-8 rounded-4xl mb-8 flex justify-center items-center group overflow-hidden ${currentProject.background_color}`}
+          className={`absolute inset-0 mx-5 mb-5 md:mx-8 rounded-4xl md:mb-8 flex justify-center items-center group overflow-hidden ${currentProject.background_color}`}
         >
-          <div className="w-full h-full flex flex-col py-8 pl-8">
+          <div className="w-full h-full flex flex-col py-5 pl-5 pr-5 md:pl-8 md:pr-0 md:py-8">
             {/* Background ID Watermark */}
             <span className="absolute top-0 left-0 text-[40vw] font-bold text-white/2 pointer-events-none select-none leading-[0.75] z-0 transform-none">
               {currentProject.id}
@@ -210,7 +257,7 @@ export function WorkContent() {
               </motion.a>
             </div>
           </div>
-          <div className="w-full h-full flex flex-col justify-center items-center">
+          <div className="w-full h-full flex-col justify-center items-center hidden md:flex">
             <Image
               src={currentProject.image}
               alt={currentProject.title}
@@ -223,7 +270,13 @@ export function WorkContent() {
       </AnimatePresence>
 
       {/* Navigation Indicators */}
-      <div className="absolute right-14 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20">
+      <div
+        className={`absolute right-6 md:right-14 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20 transition-opacity duration-300 ${
+          isNavVisible
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto"
+        }`}
+      >
         {projects.map((_, index) => (
           <button
             key={index}
@@ -252,12 +305,12 @@ export function WorkContent() {
               setDirection(-1);
               setCurrentIndex(0);
             }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors group/back cursor-pointer"
+            className="absolute bottom-8 right-7 md:left-1/2 md:-translate-x-1/2 md:right-auto z-20 flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors group/back cursor-pointer"
           >
-            <span className="p-3 rounded-full border border-white/20 group-hover/back:border-white group-hover/back:bg-white/10 transition-all duration-300">
+            <span className="p-3 rounded-full border border-white/20 group-hover/back:border-white group-hover/back:bg-white/10 transition-all duration-300 bg-black/20 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none">
               <Icon.ArrowUpIcon size={20} />
             </span>
-            <span className="text-xs mb-4 font-mono tracking-widest uppercase">
+            <span className="hidden md:block text-xs mb-4 font-mono tracking-widest uppercase">
               Back to Top
             </span>
           </motion.button>

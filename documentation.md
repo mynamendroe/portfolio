@@ -28,7 +28,7 @@
 
 - **Icons**:
   - Implemented using Tailwind's `group` and `group-hover` utilities.
-  - **Behavior**: Icons are initially hidden (`w-0 opacity-0`) and collapse to take up zero space. On hover, they expand (`w-[48px]`), fade in (`opacity-100`), and push the text to the right.
+  - **Behavior**: Icons are initially hidden (`w-0 opacity-0`) and collapse to take up zero space. On hover, they expand (`w-[24px]` on mobile, `w-[48px]` on desktop), fade in (`opacity-100`), and push the text to the right.
   - **Transition**: `transition-all duration-300 ease-in-out` ensures smooth animation of width, margin, and opacity.
   - **Border Bottom**:
     - Uses an absolute `span` overlay.

@@ -17,10 +17,10 @@ export function Header({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="py-4 px-8 h-fit justify-between flex"
+      className="py-5 px-5 md:px-8 h-fit justify-between flex"
     >
       <Link href="/">
-        <h1 className="text-4xl font-bold font-oswald tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold font-oswald tracking-tight">
           LUKMAN
         </h1>
       </Link>
