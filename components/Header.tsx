@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import * as Icon from "@phosphor-icons/react";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 export function Header({
   onMenuClick,
@@ -18,7 +19,11 @@ export function Header({
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="py-4 px-8 h-fit justify-between flex"
     >
-      <h1 className="text-4xl font-bold font-oswald tracking-tight">LUKMAN</h1>
+      <Link href="/">
+        <h1 className="text-4xl font-bold font-oswald tracking-tight">
+          LUKMAN
+        </h1>
+      </Link>
       <Button className="bg-white hover:bg-gray-100" onClick={onMenuClick}>
         {isMenuOpen ? (
           <Icon.XIcon className="text-black" size={32} />

@@ -16,28 +16,43 @@ const projects = [
     link: "https://discoveryproperty.id/",
     image: "/discoveryproperty.id_.png",
     currentWork: "Ongoing",
+    background_color: "bg-red-950",
   },
   {
     id: "02",
-    title: "PROJECT TWO",
+    title: "OFISCHAT",
     description:
-      "Interactive data visualization dashboard for complex datasets, utilizing D3.js for rendering millions of data points smoothly.",
-    tags: ["React", "Python", "D3.js", "WebGL"],
-    year: "2023",
-    link: "#",
-    image: "/project-02.jpg",
+      "WhatsApp attendance system built with Next.js and n8n, enabling seamless clock-in/out and automated reporting without leaving the chat interface.",
+    tags: ["Next.js", "Supabase", "n8n"],
+    year: "2026",
+    link: "https://ofischat.com/",
+    image: "/ofischat.png",
     currentWork: "Selected Work",
+    background_color: "bg-lime-950",
   },
   {
     id: "03",
-    title: "PROJECT THREE",
+    title: "PERSYON",
     description:
-      "Automated social media marketing tool with drag-and-drop workflow builder and comprehensive analytics reporting.",
-    tags: ["Node.js", "MongoDB", "Vue", "Docker"],
-    year: "2023",
-    link: "#",
-    image: "/project-03.jpg",
+      "Privacy-focused memory assistant featuring a friction-less interface for storing critical snippets of information, designed to eliminate mental clutter and information overload.",
+    tags: ["Bubble.io", "Google OAuth"],
+    year: "2026",
+    link: "https://persyon.com/",
+    image: "/persyon.png",
     currentWork: "Selected Work",
+    background_color: "bg-amber-950",
+  },
+  {
+    id: "04",
+    title: "QRAFTER ONE",
+    description:
+      "Integrated restaurant management ecosystem featuring dynamic digital menus, real-time table mapping, and a streamlined ordering pipeline for hospitality efficiency",
+    tags: ["Bubble.io", "Xendit"],
+    year: "2025",
+    link: "https://qrafter.one/",
+    image: "/qrafter.png",
+    currentWork: "Selected Work",
+    background_color: "bg-green-950",
   },
 ];
 
@@ -116,7 +131,7 @@ export function WorkContent() {
           initial={direction === 0 ? "center" : "enter"}
           animate="center"
           exit="exit"
-          className="absolute inset-0 mx-8 rounded-4xl mb-8 flex justify-center items-center group overflow-hidden bg-zinc-800"
+          className={`absolute inset-0 mx-8 rounded-4xl mb-8 flex justify-center items-center group overflow-hidden ${currentProject.background_color}`}
         >
           <div className="w-full h-full flex flex-col py-8 pl-8">
             {/* Background ID Watermark */}
