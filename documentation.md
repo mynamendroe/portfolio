@@ -46,3 +46,4 @@
 - **Menu**: Full-screen navigation menu with hover effects (extracted from Home).
 - **Hero**: Hero section component.
 - **Footer**: Footer component.
+- **Landing Loader**: Full-screen loading animation with percentage controlled by `LOADING_DURATION_MS` in `app/page.tsx`.

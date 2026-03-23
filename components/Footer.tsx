@@ -18,8 +18,8 @@ export function Footer() {
           href="/work"
           className="group text-md md:text-2xl flex items-center"
         >
-          <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[24px] md:group-hover:w-[48px] group-hover:mr-2 group-hover:opacity-100 block">
-            <Icon.RocketIcon className="text-white min-w-[24px] md:min-w-[48px] w-[24px] h-[24px] md:w-[48px] md:h-[48px]" />
+          <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[1.25em] group-hover:mr-2 group-hover:opacity-100 block">
+            <Icon.RocketIcon className="text-white min-w-[1em] w-[1em] h-[1em]" />
           </span>
           WORK
         </Link>
@@ -29,8 +29,8 @@ export function Footer() {
           className="group text-md md:text-2xl flex items-center"
         >
           CONTACT
-          <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[24px] md:group-hover:w-[48px] group-hover:ml-2 group-hover:opacity-100 block">
-            <Icon.EnvelopeIcon className="text-white min-w-[24px] md:min-w-[48px] w-[24px] h-[24px] md:w-[48px] md:h-[48px]" />
+          <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[1.25em] group-hover:ml-2 group-hover:opacity-100 block">
+            <Icon.EnvelopeIcon className="text-white min-w-[1em] w-[1em] h-[1em]" />
           </span>
         </Link>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, Variants } from "motion/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import * as Icon from "@phosphor-icons/react";
 import Image from "next/image";
 
@@ -56,9 +56,8 @@ const projects = [
   },
 ];
 
-// Animation variants for slide transition
 const slideVariants: Variants = {
-  enter: (direction: any) => ({
+  enter: (direction: number) => ({
     y: direction > 0 ? "100%" : "-100%",
     opacity: 1, // Keep solid
     scale: 0.9,
@@ -73,7 +72,7 @@ const slideVariants: Variants = {
       scale: { duration: 0.4 },
     },
   },
-  exit: (direction: any) => ({
+  exit: (direction: number) => ({
     y: direction > 0 ? "-100%" : "100%",
     opacity: 1,
     scale: 0.9,
@@ -92,68 +91,70 @@ export function WorkContent() {
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
 
-  const handleScroll = (e: WheelEvent) => {
-    if (isScrolling.current) return;
+  const handleScroll = useCallback(
+    (e: WheelEvent) => {
+      if (isScrolling.current) return;
 
-    if (Math.abs(e.deltaY) > 50) {
-      if (e.deltaY > 0 && currentIndex < projects.length - 1) {
-        // Scroll Down
-        isScrolling.current = true;
-        setIsNavVisible(true);
-        setDirection(1);
-        setCurrentIndex((prev) => prev + 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-          setIsNavVisible(false);
-        }, 1000);
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        // Scroll Up
-        isScrolling.current = true;
-        setIsNavVisible(true);
-        setDirection(-1);
-        setCurrentIndex((prev) => prev - 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-          setIsNavVisible(false);
-        }, 1000);
+      if (Math.abs(e.deltaY) > 50) {
+        if (e.deltaY > 0 && currentIndex < projects.length - 1) {
+          isScrolling.current = true;
+          setIsNavVisible(true);
+          setDirection(1);
+          setCurrentIndex((prev) => prev + 1);
+          setTimeout(() => {
+            isScrolling.current = false;
+            setIsNavVisible(false);
+          }, 1000);
+        } else if (e.deltaY < 0 && currentIndex > 0) {
+          isScrolling.current = true;
+          setIsNavVisible(true);
+          setDirection(-1);
+          setCurrentIndex((prev) => prev - 1);
+          setTimeout(() => {
+            isScrolling.current = false;
+            setIsNavVisible(false);
+          }, 1000);
+        }
       }
-    }
-  };
+    },
+    [currentIndex],
+  );
 
-  const handleTouchStart = (e: TouchEvent) => {
+  const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-  };
+  }, []);
 
-  const handleTouchEnd = (e: TouchEvent) => {
-    if (isScrolling.current) return;
+  const handleTouchEnd = useCallback(
+    (e: TouchEvent) => {
+      if (isScrolling.current) return;
 
-    const touchEndY = e.changedTouches[0].clientY;
-    const diff = touchStartY.current - touchEndY;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diff = touchStartY.current - touchEndY;
 
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && currentIndex < projects.length - 1) {
-        // Swipe Up -> Next
-        isScrolling.current = true;
-        setIsNavVisible(true);
-        setDirection(1);
-        setCurrentIndex((prev) => prev + 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-          setIsNavVisible(false);
-        }, 1000);
-      } else if (diff < 0 && currentIndex > 0) {
-        // Swipe Down -> Prev
-        isScrolling.current = true;
-        setIsNavVisible(true);
-        setDirection(-1);
-        setCurrentIndex((prev) => prev - 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-          setIsNavVisible(false);
-        }, 1000);
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentIndex < projects.length - 1) {
+          isScrolling.current = true;
+          setIsNavVisible(true);
+          setDirection(1);
+          setCurrentIndex((prev) => prev + 1);
+          setTimeout(() => {
+            isScrolling.current = false;
+            setIsNavVisible(false);
+          }, 1000);
+        } else if (diff < 0 && currentIndex > 0) {
+          isScrolling.current = true;
+          setIsNavVisible(true);
+          setDirection(-1);
+          setCurrentIndex((prev) => prev - 1);
+          setTimeout(() => {
+            isScrolling.current = false;
+            setIsNavVisible(false);
+          }, 1000);
+        }
       }
-    }
-  };
+    },
+    [currentIndex],
+  );
 
   useEffect(() => {
     window.addEventListener("wheel", handleScroll);
@@ -164,7 +165,7 @@ export function WorkContent() {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [currentIndex]);
+  }, [handleScroll, handleTouchStart, handleTouchEnd]);
 
   const currentProject = projects[currentIndex];
 

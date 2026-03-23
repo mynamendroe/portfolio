@@ -24,8 +24,8 @@ export function Menu({ onClose }: MenuProps) {
             className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
-              <Icon.HouseIcon className="text-white min-w-[32px]" size={32} />
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[1.25em] group-hover:mr-6 group-hover:opacity-100 block">
+              <Icon.HouseIcon className="text-white min-w-[1em] w-[1em] h-[1em]" />
             </span>
             HOME
           </Link>
@@ -40,8 +40,8 @@ export function Menu({ onClose }: MenuProps) {
             className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
-              <Icon.RocketIcon className="text-white min-w-[32px]" size={32} />
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[1.25em] group-hover:mr-6 group-hover:opacity-100 block">
+              <Icon.RocketIcon className="text-white min-w-[1em] w-[1em] h-[1em]" />
             </span>
             WORK
           </Link>
@@ -56,11 +56,8 @@ export function Menu({ onClose }: MenuProps) {
             className="text-4xl md:text-6xl lg:text-9xl font-semibold tracking-tighter flex items-center"
             onClick={onClose}
           >
-            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[32px] group-hover:mr-6 group-hover:opacity-100 block">
-              <Icon.EnvelopeIcon
-                className="text-white min-w-[32px]"
-                size={32}
-              />
+            <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:w-[1.25em] group-hover:mr-6 group-hover:opacity-100 block">
+              <Icon.EnvelopeIcon className="text-white min-w-[1em] w-[1em] h-[1em]" />
             </span>
             CONTACT
           </Link>
