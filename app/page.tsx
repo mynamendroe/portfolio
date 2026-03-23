@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { Hero } from "@/components/Hero";
@@ -8,7 +8,8 @@ import { Footer } from "@/components/Footer";
 import { PageWrapper } from "@/components/PageWrapper";
 
 const LOADING_DURATION_MS = 3000;
-let hasShownLandingLoader = false;
+/** Persists per browser tab; cleared when the tab closes (not shared across tabs). */
+const LANDING_LOADER_STORAGE_KEY = "portfolio:landing-loader-complete";
 
 function LandingLoader({ progress }: { progress: number }) {
   return (
@@ -39,14 +40,21 @@ function LandingLoader({ progress }: { progress: number }) {
 }
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(() => !hasShownLandingLoader);
+  /**
+   * `unknown`: same minimal shell on server + first client render (avoids hydration mismatch
+   * and loader flash when sessionStorage already has the completion flag).
+   * Then we commit to `loading` or `ready` in useLayoutEffect before the following paint when possible.
+   */
+  const [phase, setPhase] = useState<"unknown" | "loading" | "ready">("unknown");
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    if (!isLoading) return;
-    if (typeof window === "undefined") return;
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem(LANDING_LOADER_STORAGE_KEY) === "1") {
+      setPhase("ready");
+      return;
+    }
 
-    hasShownLandingLoader = true;
+    setPhase("loading");
 
     let frame: number | undefined;
     let startTime: number | null = null;
@@ -61,7 +69,8 @@ export default function Home() {
       if (elapsed < duration) {
         frame = window.requestAnimationFrame(animate);
       } else {
-        setIsLoading(false);
+        sessionStorage.setItem(LANDING_LOADER_STORAGE_KEY, "1");
+        setPhase("ready");
       }
     };
 
@@ -72,11 +81,21 @@ export default function Home() {
         window.cancelAnimationFrame(frame);
       }
     };
-  }, [isLoading]);
+  }, []);
+
+  if (phase === "unknown") {
+    return (
+      <div
+        className="min-h-dvh w-full bg-zinc-900"
+        aria-busy="true"
+        aria-label="Loading"
+      />
+    );
+  }
 
   return (
     <AnimatePresence mode="wait">
-      {isLoading ? (
+      {phase === "loading" ? (
         <LandingLoader key="loader" progress={progress} />
       ) : (
         <motion.div
